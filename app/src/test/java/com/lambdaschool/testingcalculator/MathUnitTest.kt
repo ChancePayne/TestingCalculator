@@ -7,6 +7,9 @@ import org.mockito.Mockito.mock
 
 class MathUnitTest {
 
+    private val math = mock(Math::class.java)
+    private val calculator = Calculator(math)
+
     @Test
     fun calculatorAddition() {
         // Setup
@@ -14,9 +17,7 @@ class MathUnitTest {
         val num2 = 17
         val expected = 27
 
-        val math = mock(Math::class.java)
         `when`(math.addIntegers(num1, num2)).thenReturn(expected)
-        val calculator = Calculator(math)
 
         // Execute
         val sum = calculator.add(num1, num2)
@@ -25,7 +26,27 @@ class MathUnitTest {
         assertEquals(expected, sum)
     }
 
+    @Test
+    fun viewModelSummation() {
+        // Setup
+        val num1 = 0
+        val num2 = 7
+        val expected = 7
 
+        val viewModel = CalculatorViewModel()
+        /*viewModel.calculator = calculator
+        `when`(math.addIntegers(num1, num2)).thenReturn(expected)*/
+        val calculator = mock(Calculator::class.java)
+        `when`(calculator.add(num1, num2)).thenReturn(expected)
+        viewModel.calculator = calculator
+
+
+        // Execute
+        val sum = viewModel.summation(num1, num2)
+
+        // Check
+        assertEquals(expected, sum)
+    }
 
     @Test
     fun testAddIntegers() {
