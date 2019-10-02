@@ -2,8 +2,30 @@ package com.lambdaschool.testingcalculator
 
 import junit.framework.Assert.assertEquals
 import org.junit.Test
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 
 class MathUnitTest {
+
+    @Test
+    fun calculatorAddition() {
+        // Setup
+        val num1 = 10
+        val num2 = 17
+        val expected = 27
+
+        val math = mock(Math::class.java)
+        `when`(math.addIntegers(num1, num2)).thenReturn(expected)
+        val calculator = Calculator(math)
+
+        // Execute
+        val sum = calculator.add(num1, num2)
+
+        // Check
+        assertEquals(expected, sum)
+    }
+
+
 
     @Test
     fun testAddIntegers() {
